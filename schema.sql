@@ -4,10 +4,10 @@ DROP DATABASE IF EXISTS employees_db;
 CREATE DATABASE employees_db;
 USE employees_db;
 
-
+-- Creating tables 'department', 'employee'. and 'role'
 CREATE TABLE department(
   id INT NOT NULL AUTOINCREMENT,
-  name VARCHAR(30) NOT NULL,
+  dept_name VARCHAR(30) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -15,7 +15,7 @@ CREATE TABLE role(
   id INT NOT NULL AUTOINCREMENT,
   title VARCHAR(30) NOT NULL,
   salary DECIMAL NOT NULL,
-  department_id INT NOT NULL,
+  dept_id INT NOT NULL,
   PRIMARY KEY (id)
 );
 
