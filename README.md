@@ -3,13 +3,12 @@ CLI-based content management systems (CMS) to manage a company's employee databa
 
 
 # Table of Contents
-* [User Story] #userstory
-* [Acceptance Criteria] #acceptancecriteria
-* [Usage] #usage
-* [Installation] #installation
-* [Credits] #credits
-* [License] #license
-* [Creator] #creator
+* [User Story](#userstory)
+* [Acceptance Criteria](#acceptancecriteria)
+* [Usage](#usage)
+* [Installation](#installation)
+* [Credits](#credits)
+
 
 
 ## User Story
@@ -42,5 +41,4 @@ CLI-based content management systems (CMS) to manage a company's employee databa
 1. CLI: Install inquirer --> npm i inquirer@8.2.4
 
 ## Credits
-## License
-## Creator
+
