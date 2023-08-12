@@ -1,19 +1,29 @@
+
+-- Creating database 'employees_db'
+DROP DATABASE IF EXISTS employees_db;
+CREATE DATABASE employees_db;
+USE employees_db;
+
+
 CREATE TABLE department(
-  id INT PRIMARY KEY,
-  name VARCHAR(30),
+  id INT NOT NULL AUTOINCREMENT,
+  name VARCHAR(30) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE role(
-  id INT PRIMARY KEY,
-  title VARCHAR(30),
-  salary DECIMAL,
-  department_id INT
+  id INT NOT NULL AUTOINCREMENT,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL NOT NULL,
+  department_id INT NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE employee(
-  id INT PRIMARY KEY,
-  firstname VARCHAR(30),
-  lastname VARCHAR(30),
-  role_id INT,
-  manager_id INT
+  id INT NOT NULL AUTOINCREMENT,
+  firstname VARCHAR(30) NOT NULL,
+  lastname VARCHAR(30) NOT NULL,
+  role_id INT NOT NULL,
+  manager_id INT NOT NULL,
+  PRIMARY KEY (id)
 );

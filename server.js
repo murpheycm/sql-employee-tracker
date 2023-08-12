@@ -1,6 +1,7 @@
 //Required package installation
-const inquirer = require("inquirer");
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
+require('dotenv').config();
 
 //CLI Application questions for navigating database
 const promptUser = () => {
@@ -25,51 +26,53 @@ const promptUser = () => {
           "Delete Role",
           "Quit",
         ],
-    }).then((answers) => {
+    }]).then((answers) => {
       const { choices } = answers; 
-
+      //'If' loops for each CLI choice
       if(choices === "View All Employees") {
-        function();
-      },
+        employees();
+      }
       if(choices === "View All Departments") {
-        function();
-      },
+        departments();
+      }
       if(choices === "View All Roles") {
-        function();
-      },
+        roles();
+      }
       if(choices === "Add Employee") {
-        function();
-      },
+        addEmployee();
+      }
       if(choices === "Add Role") {
-        function();
-      },
+        addRole();
+      }
       if(choices === "Add Department") {
-        function();
-      },
+        addDepartment();
+      }
       if(choices === "Update Employee Role") {
-        function();
-      },
+        updateRole();
+      }
       if(choices === "Update Department") {
-        function();
-      },
+        updateDepartment();
+      }
       if(choices === "Update Employee") {
-        function();
-      },
+        updateEmployee();
+      }
       if(choices === "Delete Employee") {
-        function();
-      },
+        deleteEmployee();
+      }
       if(choices === "Delete Department") {
-        function();
-      },
+        deleteDepartment();
+      }
       if(choices === "Delete Role") {
-        function();
-      },
+        deleteRole();
+      }
       if(choices === "Quit") {
-        function();
+        connection.end();
       };
-  };
+    });
 };
 
+
+promptUser();
       
     
       
