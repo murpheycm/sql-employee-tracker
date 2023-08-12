@@ -1,7 +1,9 @@
 //Required package installation
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const db = require('./connect/connection.js');
 require('dotenv').config();
+
 
 //CLI Application questions for navigating database
 const promptUser = () => {
