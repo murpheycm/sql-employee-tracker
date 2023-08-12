@@ -1,8 +1,7 @@
 //Required package installation
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const db = require('./connect/connection.js');
-require('dotenv').config();
+const sequelize = require('./config/connection');
 
 
 //CLI Application questions for navigating database
@@ -28,45 +27,50 @@ const promptUser = () => {
           "Delete Role",
           "Quit",
         ],
-    }]).then((answers) => {
+    }])
+    .then((answers) => {
       const { choices } = answers; 
       //'If' loops for each CLI choice
       if(choices === "View All Employees") {
-        employees();
+        // employees();
+        console.log("Employees");
       }
       if(choices === "View All Departments") {
-        departments();
+        // departments();
+        console.log("Departments");
       }
       if(choices === "View All Roles") {
-        roles();
+        // roles();
+        console.log("roles");
       }
       if(choices === "Add Employee") {
-        addEmployee();
+        // addEmployee();
+        console.log("add Employee");
       }
-      if(choices === "Add Role") {
-        addRole();
-      }
-      if(choices === "Add Department") {
-        addDepartment();
-      }
-      if(choices === "Update Employee Role") {
-        updateRole();
-      }
-      if(choices === "Update Department") {
-        updateDepartment();
-      }
-      if(choices === "Update Employee") {
-        updateEmployee();
-      }
-      if(choices === "Delete Employee") {
-        deleteEmployee();
-      }
-      if(choices === "Delete Department") {
-        deleteDepartment();
-      }
-      if(choices === "Delete Role") {
-        deleteRole();
-      }
+      // if(choices === "Add Role") {
+      //   addRole();
+      // }
+      // if(choices === "Add Department") {
+      //   addDepartment();
+      // }
+      // if(choices === "Update Employee Role") {
+      //   updateRole();
+      // }
+      // if(choices === "Update Department") {
+      //   updateDepartment();
+      // }
+      // if(choices === "Update Employee") {
+      //   updateEmployee();
+      // }
+      // if(choices === "Delete Employee") {
+      //   deleteEmployee();
+      // }
+      // if(choices === "Delete Department") {
+      //   deleteDepartment();
+      // }
+      // if(choices === "Delete Role") {
+      //   deleteRole();
+      // }
       if(choices === "Quit") {
         connection.end();
       };
@@ -74,7 +78,7 @@ const promptUser = () => {
 };
 
 
-promptUser();
+// promptUser();
       
     
       
