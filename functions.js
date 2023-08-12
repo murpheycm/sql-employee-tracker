@@ -4,7 +4,8 @@ function employees() {
     console.log('Viewing employees')
 
     let employees=
-
+        `SELECT 
+        FROM`
 };
 function departments();
 function roles();
