@@ -28,3 +28,12 @@ VALUES ("Milo", "Taylor", 1, 3),
         ("Hubert", "Snead", 4, 4),
         ("Dale", "Schwab", 4, 4),
         ("Savannah", "Jones", 5, 2);
+
+SELECT *
+FROM department;
+
+SELECT *
+FROM employee;
+
+SELECT *
+FROM role;
