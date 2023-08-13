@@ -1,14 +1,40 @@
 //Required package installation
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const sequelize = require('./config/connection');
-const functions = require('./functions');
+const cliTable = require('cli-table');
+// const sequelize = require('./config/connection');
+
+const query_department = 'SELECT * FROM department';
+const query_employee = 'SELECT * FROM employee';
+const query_role = 'SELECT * FROM role';
+const table = new cliTable();
+// const table_department = 'department';
+// const table_employee = 'employee';
+// const table_role = 'role';
+
+const db = mysql.createConnection(
+  {
+    host: 'localhost',
+    user: 'root',
+    password: 'rootpw',
+    //password: process.env.PASSOWRD,
+    database: 'employees_db'
+  },
+  console.log(`Connected to the employees_db database.`)
+);
+
+// db.connect(err => {
+//   if (err) throw err;
+//   console.log('connected as id ' + connection.threadId);
+// });
+
+db;
 
 const questions = [
   {
     type: "list",
     name: "options",
-    message: "What would you like to do? (Use arrow keys to navigate)",
+    message: "What would you like to do? (Use arrow keys to navigate and 'enter' key to select)",
     choices: 
     [
       "View All Employees",
@@ -30,21 +56,19 @@ const questions = [
 
 //CLI Application questions for navigating database
 function init (){
-  inquirer.prompt(questions).then(function(answers) {
-      const { choices } = answers; 
-      //'If' loops for each CLI choice
-      if(choices === "View All Employees") {
+  inquirer.prompt(questions).then(function(choices) {
+      console.log(choices.options);
+
+      // //'If' loops for each CLI choice
+      if(choices.options === "View All Employees") {
         employees();
-        console.log("Employees");
       }
-      // if(choices === "View All Departments") {
-      //   // departments();
-      //   console.log("Departments");
-      // }
-      // if(choices === "View All Roles") {
-      //   // roles();
-      //   console.log("roles");
-      // }
+      if(choices.options === "View All Departments") {
+        departments();
+      }
+      if(choices.options === "View All Roles") {
+        roles();
+      }
       // if(choices === "Add Employee") {
       //   // addEmployee();
       //   console.log("add Employee");
@@ -73,11 +97,57 @@ function init (){
       // if(choices === "Delete Role") {
       //   deleteRole();
       // }
-      if(choices === "Quit") {
-        connection.end();
-      };
+      // if(choices === "Quit") {
+      //   connection.end();
+      // };
     });
 };
+
+
+function employees() {
+  db.query(query_employee, (err, results) => {
+    if (err) {
+      console.error("ERROR", err);
+    }else {
+      console.log("Viewing all employees:");
+      console.table(results);
+    };
+  //returns user to the menu after displaying response
+  init();
+  });
+}
+
+function departments() {
+  db.query(query_department, (err, results) => {
+    if (err) {
+      console.error("ERROR", err);
+    }else {
+      console.log("Viewing all departments:");
+      console.table(results);
+    };
+  init();
+  });
+}
+
+function roles() {
+  db.query(query_role, (err, results) => {
+    if (err) {
+      console.error("ERROR", err);
+    }else {
+      console.log("Viewing all roles:");
+      console.table(results);
+    };
+  init();
+  });
+}
+
+
+
+
+
+
+
+
 
 init();
       

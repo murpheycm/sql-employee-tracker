@@ -4,20 +4,12 @@ CREATE DATABASE employees_db;
 USE employees_db;
 
 -- Show databases in use
-SELECT DATABASE ();
+-- SELECT DATABASE ();
 
 -- Creating tables 'department', 'employee'. and 'role'
 CREATE TABLE department(
   id INT NOT NULL AUTO_INCREMENT,
   dept_name VARCHAR(30) NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE role(
-  id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(30) NOT NULL,
-  salary DECIMAL NOT NULL,
-  dept_id INT NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -30,6 +22,15 @@ CREATE TABLE employee(
   PRIMARY KEY (id)
 );
 
-SHOW TABLES;
+CREATE TABLE role(
+  id INT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL NOT NULL,
+  dept_id INT NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+-- SHOW TABLES;
 
 
