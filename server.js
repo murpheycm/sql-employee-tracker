@@ -69,16 +69,15 @@ function init (){
       if(choices.options === "View All Roles") {
         roles();
       }
-      // if(choices === "Add Employee") {
-      //   // addEmployee();
-      //   console.log("add Employee");
-      // }
-      // if(choices === "Add Role") {
-      //   addRole();
-      // }
-      // if(choices === "Add Department") {
-      //   addDepartment();
-      // }
+      if(choices === "Add Employee") {
+        addEmployee();
+      }
+     if(choices === "Add Role") {
+        addRole();
+      } 
+      if(choices === "Add Department") {
+        addDepartment();
+      }
       // if(choices === "Update Employee Role") {
       //   updateRole();
       // }
@@ -97,9 +96,9 @@ function init (){
       // if(choices === "Delete Role") {
       //   deleteRole();
       // }
-      // if(choices === "Quit") {
-      //   connection.end();
-      // };
+      if(choices === "Quit") {
+        db.end();
+      };
     });
 };
 
@@ -140,6 +139,94 @@ function roles() {
   init();
   });
 }
+
+// function addDepartment() {
+//   db.query(, (err, results) => {
+//     if (err) {
+//       console.error("ERROR", err);
+//     }else {
+//       console.log("Added new department:");
+//       console.table(results);
+//     };
+//   init();
+//   });
+// }
+
+function addEmployee() {
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'first_name',
+      message:'Enter first name:',
+    },
+    {
+      type:'input',
+      name:'last_name',
+      message:'Enter last name:',
+    },
+    {
+      type:'list',
+      name:'role',
+      message:'Please select employee role:',
+      choices:
+      [
+        "customer_representative",
+        "software_engineer",
+        "director_HR",
+        "HR_representative",
+        "contract_officer"
+      ]
+    },
+    {
+      type:'input',
+      name:'role_id',
+      message:'Enter role ID # (1-9):',
+    },
+    {
+      type:'input',
+      name:'dept_id',
+      message:'Enter department ID # (1-9):',
+    },
+    {
+      type:'input',
+      name:'manager_id',
+      message:'Enter manager ID # (1-9):',
+    },
+    {
+      type:'input',
+      name:'salary',
+      message:'Enter gross annual salary:',
+    }
+  ]).then(function (answer){
+    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`, 
+      [
+        answer.first_name, 
+        answer.last_name, 
+        answer.role_id, 
+        answer.manager.id
+      ], 
+      (err, result) => {
+        if (err) throw err;
+        console.log(`Added ${answers.firstName} ${answers.lastName} to the database.`)
+
+        console.table(response);
+    
+
+    init();
+  });
+};
+
+// function addRole() {
+//   db.query(, (err, results) => {
+//     if (err) {
+//       console.error("ERROR", err);
+//     }else {
+//       console.log("Added new role:");
+//       console.table(results);
+//     };
+//   init();
+//   });
+// }
 
 
 

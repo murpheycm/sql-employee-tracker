@@ -10,12 +10,12 @@ VALUES ("customer_service"),
 
 
 -- Adding data to 'role' table in employees_db
-INSERT INTO role (title, salary, dept_id)
+INSERT INTO role (role, salary, dept_id)
 VALUES ("customer_representative", 50000, 1),
     ("software_engineer", 150000, 2),
     ("director_HR", 130000, 3),
     ("HR_representative", 60000, 3),
-    ("senior_contract_officer", 100000, 4);
+    ("contract_officer", 100000, 4);
 
 
 -- Adding data to 'employee' table in employees_db
