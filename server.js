@@ -43,9 +43,9 @@ const questions = [
       "Add Role",
       "Add Department",
       "Update Employee Role",
-      "Delete Employee",
+      // "Delete Employee",
       "Delete Department",
-      "Delete Role",
+      // "Delete Role",
       "Quit",
     ],
   }
@@ -64,32 +64,35 @@ function init (){
       if(choices.options === "View All Roles") {
         roles();
       }
-    //   if(choices.options === "Add Employee") {
-    //     addEmployee();
-    //   }
+      if(choices.options === "Add Employee") {
+        addEmployee();
+      }
       if(choices.options === "Add Role") {
         addRole();
       } 
       if(choices.options === "Add Department") {
         addDepartment();
       }
-    //   if(choices.options === "Update Employee Role") {
-    //     updateRole();
-    //   }
+      if(choices.options === "Update Employee Role") {
+        updateRole();
+      }
       // if(choices.options === "Delete Employee") {
       //   deleteEmployee();
       // }
-      // if(choices.options === "Delete Department") {
-      //   deleteDepartment();
-      // }
+      if(choices.options === "Delete Department") {
+        deleteDepartment();
+      }
       // if(choices.options === "Delete Role") {
       //   deleteRole();
       // }
       if(choices.options === "Quit") {
         db.end();
+        console.log('\n You have exited the employee management program. Enter "node server.js" to reopen application. \n');
+        return;
       };
     });
 };
+
 
 //====================View table of all departments===============\\
 function departments() {
@@ -153,44 +156,49 @@ function addDepartment() {
 }
 
 //====================To add a new employee=================\\
-// function addEmployee() {
-//   inquirer.prompt([
-//     {
-//       name:'first_name',
-//       type:'input',
-//       message:'Employee first name:',
-//     },
-//     {
-//       name:'last_name',
-//       type:'input',
-//       message:'Employee last name:',
-//     },
-//     {
-//       name:'role_id',
-//       type:'input',
-//       message:"Enter the employee's role ID #:"
-//     },
-//     {
-//       name: 'manager_id',
-//       type: 'input', 
-//       message: "What is the employee's manager's ID #? (1-9)"
-//     }
-//     ]).then(function (answer){
-//       db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
-//         [
-//           answer.first_name, 
-//           answer.last_name, 
-//           answer.role_id, 
-//           answer.manager.id
-//         ], 
-//         function (err, result) {
-//           if (err) throw err;
-//           console.log(`Added ${answers.firstName} ${answers.lastName} to the database.`)
-//           console.table(results);
-//       });
-//     init();
-//     });
-// };
+function addEmployee() {
+  db.query(query_role, (err, res) => {
+    if (err) throw err;
+    let roles = res.map(role => ({name: role.role, value: role.id }));
+        inquirer.prompt([
+            {
+                name: 'first_name',
+                type: 'input',
+                message: 'Enter the first name of the new employee:'
+            },
+            {
+                name: 'last_name',
+                type: 'input',
+                message: 'Enter the last name of the new employee:'
+            },
+            {
+                name: 'role',
+                type: 'rawlist',
+                message: 'Select the role of the new employee:',
+                choices: roles,
+            },
+            {
+                name: 'manager_id',
+                type: 'input',
+                message: 'Enter the appropriate manager ID number for the new employee:',
+            }
+        ]).then((answers) => {
+            db.query(`INSERT INTO employee SET ?`, 
+            {
+                first_name: answers.first_name,
+                last_name: answers.last_name,
+                role_id: answers.role,
+                manager_id: answers.manager_id,
+            }, 
+            (err, res) => {
+                if (err) throw err;
+                console.log(`\n ${answers.first_name} ${answers.last_name} successfully added to database! \n`);
+                employees();
+            })
+            init();
+        })
+    })
+};
 
 //====================To add a new role===================\\
 function addRole() {
@@ -232,35 +240,76 @@ function addRole() {
 };
 
 //====================To update an existing employee's role=================\\
-// function updateRole() {
-//    db.query("SELECT employee.first_name, employee.last_name FROM employee JOIN role ON employee.role_id = role.id;",
-//     function(err,res) {
-//       if (err) throw err;
-//       console.log(res);
-      
-//   inquirer.prompt([
-//     {   
-//     name:"first_name",
-//     type:"input",
-//     message"Enter employee's first name:"
-//     },
-//     {   
-//     name:"last_name",
-//     type:"input",
-//     message"Enter employee's last name:"
-//     },
-//   ]).then(function(answers) {
-//     db.query("UPDATE employee SET WHERE ?",
-//       [
-//         {first_name: val.first_name},
-//         {last_name: val.last_name},
-//       ];
-//     function(err) {
-//       if (err) throw err;
-//       console.table(results)
-//   });
-//   init();
-// };
+function updateRole() {
+  db.query(query_role, (err, res) => {
+    if (err) throw err;
+    let roles = res.map(role => ({name: role.role, value: role.id }));
+    db.query(query_employee, (err, res) => {
+        if (err) throw err;
+        let employeeList = res.map(employee => ({name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+        inquirer.prompt([
+            {
+                name: 'employee',
+                type: 'rawlist',
+                message: 'Select the employee you would like to update:',
+                choices: employeeList,
+            },
+            {
+                name: 'newRole',
+                type: 'rawlist',
+                message: 'Select new role:',
+                choices: roles,
+            },
+        ]).then((answers) => {
+            db.query(`UPDATE employee SET ? WHERE ?`, 
+            [
+              {
+                  role_id: answers.newRole,
+              },
+              {
+                  id: answers.employee,
+              },
+            ], 
+            (err, res) => {
+                if (err) throw err;
+                console.log(`\n Successfully updated employee's role in the database! \n`);
+                employees();
+                init();
+            })
+        })
+    })
+  })
+};
+
+
+//====================To delete a department=================\\
+function deleteDepartment() {
+  db.query(query_department, (err, res) => {
+      if (err) throw err;
+      let departmentList = res.map(department => ({name: department.dept_name, value: department.id }));
+      inquirer.prompt([
+          {
+          name: 'dept_name',
+          type: 'rawlist',
+          message: 'Select the department you would like to delete:',
+          choices: departmentList,
+          },
+      ]).then((answers) => {
+          db.query(`DELETE FROM department WHERE ?`, 
+          [
+            {
+                id: answers.dept_name,
+            },
+          ], 
+          (err, res) => {
+              if (err) throw err;
+              console.log(`\n Successfully removed the department from the database! \n`);
+              departments();
+              init();
+          })
+      })
+  })
+}
 
 
 //====================Starts the CLI application from login=================\\
