@@ -139,9 +139,8 @@ function addDepartment() {
       db.query(sql, answer.dept_name, (err, result) => {
         if (err) throw err;
         console.log('Added ' + answer.dept_name + " to departments!"); 
-
         departments();
-        init();
+        // init();
     });
   });
 }
@@ -185,8 +184,8 @@ function addEmployee() {
                 if (err) throw err;
                 console.log(`\n ${answers.first_name} ${answers.last_name} successfully added to database! \n`);
                 employees();
+                // init();
             })
-            init();
         })
     })
 };
@@ -224,8 +223,8 @@ function addRole() {
             if (err) throw err;
             console.log(`\n ${answers.role} successfully added to database! \n`);
             roles();
+            // init();
         });
-        init();
     });
   })
 };
@@ -265,7 +264,7 @@ function updateRole() {
                 if (err) throw err;
                 console.log(`\n Successfully updated employee's role in the database! \n`);
                 employees();
-                init();
+                // init();
             })
         })
     })
@@ -296,7 +295,7 @@ function deleteDepartment() {
               if (err) throw err;
               console.log(`\n Successfully removed the department from the database! \n`);
               departments();
-              init();
+              // init();
           })
       })
   })

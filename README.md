@@ -7,7 +7,7 @@ CLI-based content management systems (CMS) to manage a company's employee databa
 * [Acceptance Criteria](#acceptancecriteria)
 * [Usage](#usage)
 * [Installation](#installation)
-* [Credits](#credits)
+
 
 
 
@@ -37,8 +37,15 @@ CLI-based content management systems (CMS) to manage a company's employee databa
 > THEN I am prompted to select an employee to update and their new role and this information is updated in the database <br>
 
 ## Usage
-## Installation
-1. CLI: Install inquirer --> npm i inquirer@8.2.4
+1. CLI: Enter 'node server.js' to launch the application
+2. Use the arrow keys to navigate the list menu.
 
-## Credits
+### Video Example and Screenshots for Usage
+![](https://)
+
+## Installation
+1. CLI: Install node --> npm i 
+2. CLI: Install inquirer --> npm i inquirer@8.2.4
+3. CLI: Install mysql2 --> npm i mysql2
+4. CLI: Install console.table --> npm i console.table
 
