@@ -66,28 +66,28 @@ function init (){
       if(choices.options === "View All Roles") {
         roles();
       }
-      if(choices === "Add Employee") {
-        addEmployee();
-      }
-     if(choices === "Add Role") {
-        addRole();
-      } 
-      if(choices === "Add Department") {
-        addDepartment();
-      }
-      if(choices === "Update Employee Role") {
-        updateRole();
-      }
-      // if(choices === "Delete Employee") {
+    //   if(choices.options === "Add Employee") {
+    //     addEmployee();
+    //   }
+    //  if(choices.options === "Add Role") {
+    //     addRole();
+    //   } 
+    //   if(choices.options === "Add Department") {
+    //     addDepartment();
+    //   }
+    //   if(choices.options === "Update Employee Role") {
+    //     updateRole();
+    //   }
+      // if(choices.options === "Delete Employee") {
       //   deleteEmployee();
       // }
-      // if(choices === "Delete Department") {
+      // if(choices.options === "Delete Department") {
       //   deleteDepartment();
       // }
-      // if(choices === "Delete Role") {
+      // if(choices.options === "Delete Role") {
       //   deleteRole();
       // }
-      if(choices === "Quit") {
+      if(choices.options === "Quit") {
         db.end();
       };
     });
@@ -99,11 +99,9 @@ function departments() {
     if (err) throw err;
     console.log("Viewing all departments:");
     console.table(results);
-  };
-  //returns user to the menu after displaying response
-  init();
-  });
-}
+  }); 
+};
+
 
 //====================View table of all employees=================\\
 function employees() {
@@ -111,10 +109,11 @@ function employees() {
     if (err) throw err;
     console.log("Viewing all employees:");
     console.table(results);
-  };
-  init();
+    init();
   });
-}
+  // init();
+};
+
 
 //====================View table of all roles===================\\
 function roles() {
@@ -122,10 +121,10 @@ function roles() {
     if (err) throw err;
     console.log("Viewing all roles:");
     console.table(results);
-  };
-  init();
   });
-}
+  init();
+};
+
 
 //====================To add a new department=================\\
 // function addDepartment() {
