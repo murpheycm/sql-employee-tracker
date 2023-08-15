@@ -3,9 +3,6 @@ DROP DATABASE IF EXISTS employees_db;
 CREATE DATABASE employees_db;
 USE employees_db;
 
--- Show databases in use
--- SELECT DATABASE ();
-
 -- Creating tables 'department', 'employee'. and 'role'
 CREATE TABLE department(
   id INT NOT NULL AUTO_INCREMENT,
@@ -24,13 +21,11 @@ CREATE TABLE employee(
 
 CREATE TABLE role(
   id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(30) NOT NULL,
+  role VARCHAR(30) NOT NULL,
   salary DECIMAL NOT NULL,
   dept_id INT NOT NULL,
   PRIMARY KEY (id)
 );
 
-
--- SHOW TABLES;
 
 

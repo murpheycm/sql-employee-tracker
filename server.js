@@ -43,8 +43,6 @@ const questions = [
       "Add Role",
       "Add Department",
       "Update Employee Role",
-      "Update Department",
-      "Update Employee",
       "Delete Employee",
       "Delete Department",
       "Delete Role",
@@ -69,12 +67,12 @@ function init (){
     //   if(choices.options === "Add Employee") {
     //     addEmployee();
     //   }
-    //  if(choices.options === "Add Role") {
-    //     addRole();
-    //   } 
-    //   if(choices.options === "Add Department") {
-    //     addDepartment();
-    //   }
+      if(choices.options === "Add Role") {
+        addRole();
+      } 
+      if(choices.options === "Add Department") {
+        addDepartment();
+      }
     //   if(choices.options === "Update Employee Role") {
     //     updateRole();
     //   }
@@ -99,6 +97,7 @@ function departments() {
     if (err) throw err;
     console.log("Viewing all departments:");
     console.table(results);
+    init();
   }); 
 };
 
@@ -111,7 +110,6 @@ function employees() {
     console.table(results);
     init();
   });
-  // init();
 };
 
 
@@ -121,32 +119,38 @@ function roles() {
     if (err) throw err;
     console.log("Viewing all roles:");
     console.table(results);
+    init();
   });
-  init();
 };
 
 
 //====================To add a new department=================\\
-// function addDepartment() {
-//   inquirer.prompt(
-//     {
-//       name: "dept_name",
-//       type: "input",
-//       message: "Enter new department name:"
-//     }).then(function(answers) {
-//       // db.query(
-//       //         "INSERT INTO department SET ?",
-//       //         {
-//       //           dept_name: answers.dept_name,
-//       //         },
-//       db.query("INSERT INTO department (name) VALUES (?)", function (err, results) {
-//         if (err) throw err;
-//         console.log("Added new department:");
-//         console.table(results);
-//       };
-//       init();
-//     });
-// }
+function addDepartment() {
+  inquirer.prompt([
+    {
+      name: 'dept_name',
+      type: 'input', 
+      message: "Enter new department name:",
+      validate: dept_name => {
+        if (dept_name) {
+            return true;
+        } else {
+            console.log('Please enter a department');
+            return false;
+        }
+      }
+    }
+  ]).then(answer => {
+      const sql = `INSERT INTO department (dept_name) VALUES (?)`;
+      db.query(sql, answer.dept_name, (err, result) => {
+        if (err) throw err;
+        console.log('Added ' + answer.dept_name + " to departments!"); 
+
+        departments();
+        init();
+    });
+  });
+}
 
 //====================To add a new employee=================\\
 // function addEmployee() {
@@ -189,38 +193,43 @@ function roles() {
 // };
 
 //====================To add a new role===================\\
-// function addRole() {
-//   inquirer.prompt([
-//     {
-//       name:"title",
-//       type:"input",
-//       message:"Enter role name:"
-//     },
-//     {
-//       name: "salary",
-//       type: "input",
-//       message: "Enter the salary for this role:"
-//     },
-//     {
-//       name: "dept_id",  
-//       type: "input",
-//       message: "Enter the department id number:",
-//     }
-//     ]).then(function(answers) {
-//       db.query('INSERT INTO role (title, salary, dept_id) VALUES (?,?,?)', 
-//         [
-//           answer.title,
-//           answer.salary,
-//           answer.dept_id
-//         ], 
-//         function(err, res) {
-//           if (err) throw err;
-//           console.log("Added new role:");
-//           console.table(results);
-//         };
-//     });
-//     init();
-// };
+function addRole() {
+  db.query(query_department, (err, res) => {
+    if (err) throw err;
+    let departmentList = res.map(department => ({name: department.dept_name, value: department.id }));
+    inquirer.prompt([
+        {
+        name: 'role',
+        type: 'input',
+        message: 'Enter a role name you want to add:'   
+        },
+        {
+        name: 'salary',
+        type: 'input',
+        message: 'Enter the salary of the role:'   
+        },
+        {
+        name: 'dept_name',
+        type: 'rawlist',
+        message: 'Which department do you want to add the new role to?',
+        choices: departmentList,
+        },
+    ]).then((answers) => {
+        db.query(`INSERT INTO role SET ?`, 
+        {
+            role: answers.role,
+            salary: answers.salary,
+            dept_id: answers.dept_name,
+        },
+        (err, res) => {
+            if (err) throw err;
+            console.log(`\n ${answers.role} successfully added to database! \n`);
+            roles();
+        });
+        init();
+    });
+  })
+};
 
 //====================To update an existing employee's role=================\\
 // function updateRole() {
