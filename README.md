@@ -41,7 +41,10 @@ CLI-based content management systems (CMS) to manage a company's employee databa
 2. Use the arrow keys to navigate the list menu.
 
 ### Video Example and Screenshots for Usage
-![](https://)
+https://www.youtube.com/watch?v=h4bci2ceK3s
+
+![image](./info/capture.jpg)
+
 
 ## Installation
 1. CLI: Install node --> npm i 
