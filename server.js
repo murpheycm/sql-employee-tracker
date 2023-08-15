@@ -1,30 +1,21 @@
 //==================Dependencies===================\\
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const cliTable = require('cli-table');
-//const dotenv = require('dotenv');
+require('dotenv').config();
 
 const query_department = 'SELECT * FROM department';
 const query_employee = 'SELECT * FROM employee';
 const query_role = 'SELECT * FROM role';
-// const table = new cliTable();
 
 const db = mysql.createConnection(
   {
     host: 'localhost',
     user: 'root',
-    password: 'rootpw',
-    //password: process.env.PASSOWRD,
+    password: process.env.DB_PASSWORD,
     database: 'employees_db'
   },
   console.log(`Connected to the employees_db database.`)
 );
-
-//==============Connection Check===============\\
-// db.connect(err => {
-//   if (err) throw err;
-//   console.log('connected as id ' + connection.threadId);
-// });
 
 db;
 
